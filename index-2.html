@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article Bridge — Get Published. Get Seen. Get Trusted.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080a0f;
+    --bg2: #0d1018;
+    --bg3: #111520;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --teal: #2dd4bf;
+    --teal2: #14b8a6;
+    --text: #e8e8e0;
+    --muted: #7a7f8e;
+    --border: rgba(201,168,76,0.15);
+    --glow: rgba(201,168,76,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 42px; height: 42px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .logo-icon svg { width: 100%; height: 100%; }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+  .logo-text span { color: var(--gold); }
+  nav { display: flex; align-items: center; gap: 2rem; }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+  .btn-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #0a0800;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-cta.teal {
+    background: linear-gradient(135deg, var(--teal2), var(--teal));
+    color: #021a17;
+  }
+  .btn-ghost {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-ghost:hover { background: var(--gold); color: #0a0800; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(45,212,191,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 20% 60%, rgba(201,168,76,0.09) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, rgba(17,21,32,0.9) 0%, var(--bg) 80%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold2);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before { content: '✦'; font-size: 0.6rem; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-btns .btn-cta { padding: 0.85rem 2rem; font-size: 0.95rem; border-radius: 6px; }
+  .hero-btns .btn-ghost { padding: 0.85rem 2rem; font-size: 0.95rem; border-radius: 6px; }
+
+  /* HERO CARD */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .article-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+  }
+  .article-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .article-card:nth-child(2) { animation-delay: 1.5s; margin-left: 2rem; }
+  .card-source {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .card-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .card-meta { font-size: 0.78rem; color: var(--muted); }
+  .seen-on-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(45,212,191,0.1);
+    border: 1px solid rgba(45,212,191,0.25);
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    margin-top: 0.75rem;
+  }
+
+  /* TRUSTED BY */
+  .trusted-section {
+    padding: 3rem 3rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    overflow: hidden;
+  }
+  .trusted-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .trusted-marquee {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .trusted-marquee-wrap { overflow: hidden; }
+  .pub-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    opacity: 0.6;
+    letter-spacing: 0.02em;
+    transition: opacity 0.3s;
+    flex-shrink: 0;
+  }
+  .pub-name:hover { opacity: 1; color: var(--gold); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  h2 em { font-style: italic; color: var(--gold); }
+  .lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.75;
+  }
+
+  /* WHY US */
+  .why-us { background: var(--bg2); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .why-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .why-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+  .why-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .why-card:hover::after { opacity: 1; }
+  .why-icon {
+    width: 48px; height: 48px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .why-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+    color: var(--text);
+  }
+  .why-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  /* HOW IT WORKS */
+  .how-it-works { background: var(--bg); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+  .step {
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: #0a0800;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+    color: var(--text);
+  }
+  .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+  /* GET PUBLISHED BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(45,212,191,0.06));
+    border-top: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+  .cta-banner h2 { margin-bottom: 1rem; }
+  .cta-banner p { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+  .cta-banner .btn-cta { padding: 1rem 2.5rem; font-size: 1rem; border-radius: 6px; display: inline-block; }
+
+  /* PRICING */
+  #pricing { background: var(--bg2); }
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+  .toggle-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.55rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .toggle-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0a0800;
+    font-weight: 700;
+  }
+  .monthly-badge {
+    background: rgba(45,212,191,0.15);
+    border: 1px solid rgba(45,212,191,0.3);
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  .price-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .price-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.4); }
+  .price-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, rgba(201,168,76,0.08), var(--bg3) 60%);
+  }
+  .featured-tag {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--gold);
+    color: #0a0800;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+  }
+  .plan-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--gold2);
+    margin-bottom: 0.25rem;
+  }
+  .plan-tagline {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .plan-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .plan-price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+  .plan-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+  }
+  .plan-features { list-style: none; flex: 1; margin-bottom: 1.5rem; }
+  .plan-features li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 0.4rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.5;
+  }
+  .plan-features li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; margin-top: 0.35rem; flex-shrink: 0; }
+  .plan-addon {
+    font-size: 0.78rem;
+    color: var(--teal);
+    background: rgba(45,212,191,0.08);
+    border: 1px solid rgba(45,212,191,0.18);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .plan-btn {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.2s;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold2);
+  }
+  .plan-btn:hover { background: var(--gold); color: #0a0800; border-color: var(--gold); }
+  .price-card.featured .plan-btn {
+    background: var(--gold);
+    color: #0a0800;
+    border-color: var(--gold);
+  }
+  .price-card.featured .plan-btn:hover { opacity: 0.85; }
+
+  /* HIDDEN MONTHLY */
+  .monthly-plans { display: none; }
+  .monthly-plans.active { display: grid; }
+  .onetime-plans.hidden { display: none; }
+
+  /* PUBLICATIONS */
+  .publications { background: var(--bg); }
+  .pub-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .pub-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .pub-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+  .pub-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .pub-card-name { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .pub-card-type { font-size: 0.72rem; color: var(--muted); }
+  .pub-card.premium { border-color: rgba(201,168,76,0.4); }
+  .pub-card.premium .pub-icon { background: linear-gradient(135deg, #c9a84c, #f0d890); }
+
+  /* REVIEWS */
+  .reviews { background: var(--bg2); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .review-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: transform 0.3s;
+  }
+  .review-card:hover { transform: translateY(-4px); }
+  .stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .review-text {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .reviewer-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid rgba(201,168,76,0.3);
+    background: linear-gradient(135deg, var(--bg), var(--bg3));
+  }
+  .reviewer-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .reviewer-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+  .reviewer-role { font-size: 0.78rem; color: var(--muted); }
+
+  /* BOTTOM CTA */
+  .bottom-cta {
+    background: var(--bg);
+    text-align: center;
+    padding: 6rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .bottom-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  }
+  .bottom-cta .section-inner { position: relative; }
+  .bottom-cta h2 { font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 1.2rem; }
+  .bottom-cta .lead { margin: 0 auto 2.5rem; }
+  .bottom-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .bottom-cta-btns .btn-cta, .bottom-cta-btns .btn-ghost {
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .footer-brand .logo-text { font-size: 1.2rem; }
+  .footer-brand p { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; max-width: 260px; line-height: 1.65; }
+  .footer-links h4 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .footer-links a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* TERMS PAGE */
+  .terms-page { display: none; padding: 8rem 3rem 4rem; min-height: 100vh; }
+  .terms-page.active { display: block; }
+  .main-content { display: block; }
+  .main-content.hidden { display: none; }
+  .terms-inner { max-width: 760px; margin: 0 auto; }
+  .terms-inner h1 { margin-bottom: 0.5rem; font-size: 2.5rem; }
+  .terms-inner .updated { font-size: 0.85rem; color: var(--muted); margin-bottom: 3rem; }
+  .terms-inner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold2);
+    margin: 2rem 0 0.75rem;
+  }
+  .terms-inner p { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 0.75rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .pub-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    header { padding: 1rem 1.5rem; }
+    nav { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .pub-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .steps::before { display: none; }
+    .footer-inner { flex-direction: column; }
+    header { padding: 1rem 1.5rem; }
+    .trusted-section { padding: 2rem 1.5rem; }
+    .cta-banner { padding: 3rem 1.5rem; }
+    .bottom-cta { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#home" class="logo" onclick="showMain()">
+    <div class="logo-icon">
+      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="40" height="40" rx="8" fill="#111520" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M8 12 L22 8 L34 12 L34 30 L22 34 L8 30 Z" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.4"/>
+        <path d="M14 17 L28 17" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M14 21 L28 21" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M14 25 L22 25" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="30" cy="29" r="6" fill="#0d1018" stroke="#2dd4bf" stroke-width="1.5"/>
+        <path d="M27.5 29 L29 30.5 L32.5 27" stroke="#2dd4bf" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">Article<span>Bridge</span></span>
+  </a>
+  <nav>
+    <a href="#why-us" onclick="showMain()">Why Us</a>
+    <a href="#how-it-works" onclick="showMain()">How It Works</a>
+    <a href="#pricing" onclick="showMain()">Pricing</a>
+    <a href="#reviews" onclick="showMain()">Reviews</a>
+    <a href="#terms" onclick="showTerms(); return false;">Terms</a>
+    <a href="#pricing" onclick="showMain()" class="btn-cta">Get Published</a>
+  </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="mainContent">
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">Premium Press Publishing</div>
+      <h1>Your Story,<br><em>Published.</em><br>Your Brand,<br>Trusted.</h1>
+      <p class="hero-sub">Article Bridge places you in top online publications — building credibility, boosting SEO, and putting your name in front of the audiences that matter.</p>
+      <div class="hero-btns">
+        <a href="#pricing" class="btn-cta">Get Published →</a>
+        <a href="#how-it-works" class="btn-ghost">See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="article-card">
+        <div class="card-source">🏛 The Ritz Herald</div>
+        <div class="card-headline">"Local Fitness Coach Lands Feature in Top Editorial — Clients Up 340%"</div>
+        <div class="card-meta">Published · Featured Story</div>
+        <div class="seen-on-badge">✓ As Seen On The Ritz Herald</div>
+      </div>
+      <div class="article-card">
+        <div class="card-source">📰 Washington Mail · NY Today · Texas Reporter</div>
+        <div class="card-headline">"SaaS Founder Secures 10-Site Press Coverage — Organic Traffic Doubles"</div>
+        <div class="card-meta">Published · Press Network</div>
+        <div class="seen-on-badge">✓ 10 Publications · SEO Boost</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED BY -->
+<div class="trusted-section">
+  <div class="trusted-label">We publish your articles on these trusted outlets</div>
+  <div class="trusted-marquee-wrap">
+    <div class="trusted-marquee">
+      <span class="pub-name">Washington Mail</span>
+      <span class="pub-name" style="color:var(--gold);opacity:0.9">★ The Ritz Herald</span>
+      <span class="pub-name">New York Today</span>
+      <span class="pub-name">The Boston Courier</span>
+      <span class="pub-name">Michigan Post</span>
+      <span class="pub-name">Tycoon Herald</span>
+      <span class="pub-name">America Age</span>
+      <span class="pub-name">New York Dawn</span>
+      <span class="pub-name">The Texas Reporter</span>
+      <span class="pub-name">California Recorder</span>
+      <span class="pub-name">Wall Street Publication</span>
+      <span class="pub-name" style="color:var(--gold);opacity:0.9">★ The Ritz Herald</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="pub-name">Washington Mail</span>
+      <span class="pub-name" style="color:var(--gold);opacity:0.9">★ The Ritz Herald</span>
+      <span class="pub-name">New York Today</span>
+      <span class="pub-name">The Boston Courier</span>
+      <span class="pub-name">Michigan Post</span>
+      <span class="pub-name">Tycoon Herald</span>
+      <span class="pub-name">America Age</span>
+      <span class="pub-name">New York Dawn</span>
+      <span class="pub-name">The Texas Reporter</span>
+      <span class="pub-name">California Recorder</span>
+      <span class="pub-name">Wall Street Publication</span>
+      <span class="pub-name" style="color:var(--gold);opacity:0.9">★ The Ritz Herald</span>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="section-inner">
+    <div class="section-tag">// Why Article Bridge</div>
+    <h2>Built for People<br>Who Have a <em>Story to Tell</em></h2>
+    <p class="lead">Whether you're an influencer, course creator, entrepreneur, or business owner — press coverage is the fastest way to build trust, grow your audience, and be taken seriously.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🚀</div>
+        <h3>Instant Authority</h3>
+        <p>Being featured in recognized publications instantly signals credibility. Your audience, followers, and potential clients see "As Seen On" and trust you at a deeper level before you've said a word.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔍</div>
+        <h3>Powerful SEO Boost</h3>
+        <p>Published articles on high-authority news sites create powerful backlinks that push your website higher on Google — helping you get discovered by new audiences organically, month after month.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📣</div>
+        <h3>Built for Influencers</h3>
+        <p>Grow closer to your existing audience with content that validates your expertise and story. Share your press features across social, email, and your website to deepen connection and drive conversions.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💼</div>
+        <h3>Perfect for Course Sellers</h3>
+        <p>A published article is the most powerful social proof you can add to your sales funnel. Convert skeptical leads into buyers by showing you've been recognized by the media.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌐</div>
+        <h3>Grow a New Audience</h3>
+        <p>Each publication we place you on has its own readership. Your story reaches real people who've never heard of you — expanding your reach beyond your current network and following.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <h3>Done For You</h3>
+        <p>We handle everything — writing, editing, formatting, and publishing. All we need from you is some info about your story. No journalism experience, no pitching, no stress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET PUBLISHED BANNER -->
+<div class="cta-banner">
+  <div class="section-inner">
+    <h2>Ready to See Your Name <em>In Print?</em></h2>
+    <p>Join entrepreneurs, influencers, and course creators who've built real credibility with Article Bridge.</p>
+    <a href="#pricing" class="btn-cta">Get Published Today →</a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-tag">// How It Works</div>
+    <h2>From Zero to<br><em>Published</em> in Days</h2>
+    <p class="lead">Our process is built to be effortless for you. Four simple steps — and you'll be featured in top publications before you know it.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Choose Your Plan</h3>
+        <p>Select the package that fits your goals — from a single premium editorial to maximum multi-site press coverage. Pay securely via Stripe.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>We Send You a Form</h3>
+        <p>Right after your purchase, we'll send you a simple intake form collecting everything we need — your story, your brand, your goals. No guesswork required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>We Write & Publish</h3>
+        <p>As soon as your form is submitted, our writers get to work crafting your article. Once approved, we submit and publish it across your chosen outlets.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>You Get the Links</h3>
+        <p>We send you live URLs for every published article. Add the "As Seen On" badge to your website, share on social, and start reaping the credibility rewards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">// Pricing</div>
+    <h2>Transparent Pricing,<br><em>Real Results</em></h2>
+    <p class="lead">One-time packages for immediate impact. Monthly plans for sustained visibility and SEO momentum. No hidden fees.</p>
+
+    <div class="pricing-toggle">
+      <button class="toggle-btn active" id="onetimeBtn" onclick="showOnetime()">One-Time</button>
+      <button class="toggle-btn" id="monthlyBtn" onclick="showMonthly()">Monthly <span class="monthly-badge">Save 20%</span></button>
+    </div>
+
+    <!-- ONE-TIME PLANS -->
+    <div class="pricing-grid onetime-plans" id="onetimePlans">
+
+      <div class="price-card">
+        <div class="plan-name">Personal</div>
+        <div class="plan-tagline">For entrepreneurs, influencers & coaches who want premium editorial placement.</div>
+        <div class="plan-price">$250</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 article on The Ritz Herald</li>
+          <li>"As Seen On" badge included</li>
+          <li>High-authority editorial placement</li>
+          <li>Professional article written for you</li>
+          <li>Live article URL delivered</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_4gMdR2exH9du1Nkdfq7EQ03" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name">Basic</div>
+        <div class="plan-tagline">Starter multi-site exposure for brands ready to build broader visibility.</div>
+        <div class="plan-price">$400</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 article on 3 press sites</li>
+          <li>SEO backlinks from multiple domains</li>
+          <li>Professional article written for you</li>
+          <li>Live article URLs delivered</li>
+          <li>Combine with other plans</li>
+        </ul>
+        <div class="plan-addon">+ $100 optional add-on for The Ritz Herald placement</div>
+        <a href="https://buy.stripe.com/test_3cI9AM2OZcpG77E3EQ7EQ05" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="featured-tag">Most Popular</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-tagline">Broad press coverage for growing businesses with stronger brand visibility.</div>
+        <div class="plan-price">$500</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 article on 10 press sites</li>
+          <li>10x SEO backlinks from top domains</li>
+          <li>Maximum organic reach</li>
+          <li>Professional article written for you</li>
+          <li>Live article URLs delivered</li>
+        </ul>
+        <div class="plan-addon">+ $100 optional add-on for The Ritz Herald placement</div>
+        <a href="https://buy.stripe.com/test_bJeeV6gFP9du3Vseju7EQ06" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name">Platinum</div>
+        <div class="plan-tagline">Maximum coverage with 2 articles. Perfect for funded startups, SaaS & coaches.</div>
+        <div class="plan-price">$800</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>2 articles, each on 10 press sites</li>
+          <li>20 total press placements</li>
+          <li>Massive SEO backlink boost</li>
+          <li>Buy 1, get 2nd article 30% off</li>
+          <li>Both articles written for you</li>
+        </ul>
+        <div class="plan-addon">+ $100 per article for The Ritz Herald add-on</div>
+        <a href="https://buy.stripe.com/test_9B63co3T32P6dw26R27EQ07" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+    </div>
+
+    <!-- MONTHLY PLANS -->
+    <div class="pricing-grid monthly-plans" id="monthlyPlans">
+
+      <div class="price-card">
+        <div class="plan-name">Personal</div>
+        <div class="plan-tagline">1 Ritz Herald article every month. Minimum 2 months.</div>
+        <div class="plan-price">$200 <span>/ mo</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 Ritz Herald article/month</li>
+          <li>Consistent editorial authority</li>
+          <li>"As Seen On" badge</li>
+          <li>2 month minimum</li>
+          <li>Save 20% vs one-time</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_bJedR2exH89q9fM7V67EQ04" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name">Basic</div>
+        <div class="plan-tagline">Monthly placement on 3 press sites. Minimum 2 months.</div>
+        <div class="plan-price">$320 <span>/ mo</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 article on 3 sites/month</li>
+          <li>Growing SEO presence</li>
+          <li>Multi-domain backlinks</li>
+          <li>2 month minimum</li>
+          <li>Save 20% vs one-time</li>
+        </ul>
+        <div class="plan-addon">+ $100/mo for Ritz Herald add-on</div>
+        <a href="https://buy.stripe.com/test_14A9AMahrcpGeA6cbm7EQ08" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="featured-tag">Best Value</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-tagline">Monthly 10-site coverage. The compounding SEO play. Min 2 months.</div>
+        <div class="plan-price">$400 <span>/ mo</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 article on 10 sites/month</li>
+          <li>Compounding SEO growth</li>
+          <li>Sustained brand authority</li>
+          <li>2 month minimum</li>
+          <li>Save 20% vs one-time</li>
+        </ul>
+        <div class="plan-addon">+ $100/mo for Ritz Herald add-on</div>
+        <a href="https://buy.stripe.com/test_9B6aEQ0GR2P63Vs6R27EQ09" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name">Platinum</div>
+        <div class="plan-tagline">Maximum monthly coverage — 2 articles, 10 sites each. Min 2 months.</div>
+        <div class="plan-price">$640 <span>/ mo</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>2 articles/month on 10 sites each</li>
+          <li>20 placements per month</li>
+          <li>Dominant SEO footprint</li>
+          <li>2 month minimum</li>
+          <li>Save 20% vs one-time</li>
+        </ul>
+        <div class="plan-addon">+ $100/mo per article for Ritz Herald add-on</div>
+        <a href="https://buy.stripe.com/test_14A5kw75f89qajQcbm7EQ0a" target="_blank" class="plan-btn">Get Published →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="publications" id="publications">
+  <div class="section-inner">
+    <div class="section-tag">// Our Publication Network</div>
+    <h2>Published on Outlets<br>People <em>Actually Trust</em></h2>
+    <p class="lead">Your article gets placed on established news and editorial sites with real readership, real domain authority, and real SEO power.</p>
+    <div class="pub-grid">
+      <div class="pub-card premium">
+        <div class="pub-icon">★</div>
+        <div>
+          <div class="pub-card-name">The Ritz Herald</div>
+          <div class="pub-card-type">Premium Editorial</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">📰</div>
+        <div>
+          <div class="pub-card-name">Washington Mail</div>
+          <div class="pub-card-type">National News</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🗽</div>
+        <div>
+          <div class="pub-card-name">New York Today</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🦅</div>
+        <div>
+          <div class="pub-card-name">The Boston Courier</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🌊</div>
+        <div>
+          <div class="pub-card-name">Michigan Post</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">💼</div>
+        <div>
+          <div class="pub-card-name">Tycoon Herald</div>
+          <div class="pub-card-type">Business & Entrepreneurship</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🇺🇸</div>
+        <div>
+          <div class="pub-card-name">America Age</div>
+          <div class="pub-card-type">National Editorial</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🌆</div>
+        <div>
+          <div class="pub-card-name">New York Dawn</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🤠</div>
+        <div>
+          <div class="pub-card-name">The Texas Reporter</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🌴</div>
+        <div>
+          <div class="pub-card-name">California Recorder</div>
+          <div class="pub-card-type">Regional Authority</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">📈</div>
+        <div>
+          <div class="pub-card-name">Wall Street Publication</div>
+          <div class="pub-card-type">Finance & Business</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-inner">
+    <div class="section-tag">// Client Reviews</div>
+    <h2>Real People,<br><em>Real Results</em></h2>
+    <p class="lead">Hear from entrepreneurs, influencers, and business owners who've used Article Bridge to build credibility and grow their audience.</p>
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I was skeptical but after getting published on 10 sites, my Google ranking for my name shot up to page one. Clients started mentioning they'd read about me online before even reaching out. Game changer."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=11" alt="Marcus T.">
+          </div>
+          <div>
+            <div class="reviewer-name">Marcus T.</div>
+            <div class="reviewer-role">Business Coach, Atlanta</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Being featured in The Ritz Herald was the best investment I made for my personal brand. I put the 'As Seen On' badge on my course landing page and my conversion rate jumped noticeably within the first week."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=47" alt="Sofia R.">
+          </div>
+          <div>
+            <div class="reviewer-name">Sofia R.</div>
+            <div class="reviewer-role">Online Course Creator</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"The process was incredibly smooth. I filled out the form, they wrote a great article about my startup, and within days I had live links from 10 publications. My domain authority went up and investors noticed."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=33" alt="James K.">
+          </div>
+          <div>
+            <div class="reviewer-name">James K.</div>
+            <div class="reviewer-role">SaaS Founder</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"As an influencer, trust is everything. Having my story published professionally made my followers take me more seriously. My DMs after sharing the article were insane — people were asking how to work with me."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=25" alt="Aaliyah M.">
+          </div>
+          <div>
+            <div class="reviewer-name">Aaliyah M.</div>
+            <div class="reviewer-role">Lifestyle Influencer, 180K followers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I run a small e-commerce brand and needed to stand out from competitors. The Platinum plan got me 20 press placements across the month. Now when people Google my brand, news articles come up. That's priceless."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=52" alt="Daniel W.">
+          </div>
+          <div>
+            <div class="reviewer-name">Daniel W.</div>
+            <div class="reviewer-role">E-Commerce Brand Owner</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I was launching my coaching program and needed credibility fast. Article Bridge delivered. The article was professional and accurate, and my coach community was buzzing when they saw me on multiple news sites."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">
+            <img src="https://i.pravatar.cc/150?img=41" alt="Priya N.">
+          </div>
+          <div>
+            <div class="reviewer-name">Priya N.</div>
+            <div class="reviewer-role">Life & Mindset Coach</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="section-inner">
+    <div class="section-tag" style="text-align:center;margin-bottom:1rem">// Take the Next Step</div>
+    <h2>Your Story Deserves<br>to Be <em>Heard</em></h2>
+    <p class="lead">Join hundreds of business owners, influencers, and course creators who've earned their place in the press. It starts with a single article.</p>
+    <div class="bottom-cta-btns">
+      <a href="#pricing" class="btn-cta">Get Published Now →</a>
+      <a href="#how-it-works" class="btn-ghost">Learn How It Works</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-text" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700">Article<span style="color:var(--gold)">Bridge</span></span>
+      <p>Professional press publishing for entrepreneurs, influencers, and brands who want to be seen, trusted, and found.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <a href="#home" onclick="showMain()">Home</a>
+      <a href="#why-us" onclick="showMain()">Why Us</a>
+      <a href="#how-it-works" onclick="showMain()">How It Works</a>
+      <a href="#pricing" onclick="showMain()">Pricing</a>
+      <a href="#reviews" onclick="showMain()">Reviews</a>
+    </div>
+    <div class="footer-links">
+      <h4>Plans</h4>
+      <a href="https://buy.stripe.com/test_4gMdR2exH9du1Nkdfq7EQ03" target="_blank">Personal — $250</a>
+      <a href="https://buy.stripe.com/test_3cI9AM2OZcpG77E3EQ7EQ05" target="_blank">Basic — $400</a>
+      <a href="https://buy.stripe.com/test_bJeeV6gFP9du3Vseju7EQ06" target="_blank">Standard — $500</a>
+      <a href="https://buy.stripe.com/test_9B63co3T32P6dw26R27EQ07" target="_blank">Platinum — $800</a>
+    </div>
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <a href="#terms" onclick="showTerms(); return false;">Terms of Service</a>
+      <a href="#terms" onclick="showTerms(); return false;">Privacy Policy</a>
+      <a href="#pricing" onclick="showMain()">Refund Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Article Bridge. All rights reserved.</span>
+    <span>Professional Press Publishing Services</span>
+  </div>
+</footer>
+
+</div><!-- END MAIN CONTENT -->
+
+<!-- TERMS PAGE -->
+<div class="terms-page" id="termsPage">
+  <div class="terms-inner">
+    <div class="section-tag">// Legal</div>
+    <h1>Terms of <em>Service</em></h1>
+    <p class="updated">Last Updated: January 2025</p>
+
+    <h3>1. Agreement to Terms</h3>
+    <p>By purchasing any service from Article Bridge ("we," "us," "our"), you ("Client") agree to be bound by these Terms of Service. If you do not agree, do not proceed with a purchase.</p>
+
+    <h3>2. Services Provided</h3>
+    <p>Article Bridge provides press publishing services, which include professional article writing and placement on third-party news and editorial websites. We do not guarantee specific traffic, revenue, or business outcomes resulting from published articles.</p>
+    <p>Publication timelines are estimates. We aim to complete and publish your article within 5–10 business days of receiving your completed intake form. Delays caused by incomplete information from the client may extend this timeline.</p>
+
+    <h3>3. Client Responsibilities</h3>
+    <p>You are responsible for providing accurate, truthful information about yourself or your business via our intake form. Article Bridge is not liable for content that is based on false or misleading information provided by the client. You grant us permission to write and publish content on your behalf using the information you provide.</p>
+
+    <h3>4. Publication Guarantee</h3>
+    <p>We will make every effort to publish your article on the outlets specified in your chosen plan. In the rare event that a specific outlet is unavailable, we will substitute a comparable outlet of equal or greater authority at no additional cost to you.</p>
+
+    <h3>5. Payments & Refunds</h3>
+    <p>All payments are processed securely through Stripe. Prices are listed in USD. By completing a purchase, you authorize Article Bridge to charge the listed amount.</p>
+    <p>Refunds are available within 48 hours of purchase, provided that work on your article has not yet begun. Once work has commenced (i.e., your intake form has been received and article writing has started), no refunds will be issued. For monthly plans, you may cancel before your next billing cycle. Cancellations do not apply retroactively.</p>
+    <p>The 2-month minimum for monthly plans means you will be charged for at least two billing cycles before cancellation takes effect.</p>
+
+    <h3>6. Intellectual Property</h3>
+    <p>Upon full payment, you own the right to share and reference published articles for marketing purposes, including displaying "As Seen On" badges. The underlying articles remain published on the respective third-party platforms and are subject to their own editorial policies. Article Bridge retains no ongoing claim over published content.</p>
+
+    <h3>7. Add-Ons</h3>
+    <p>Optional add-ons (such as The Ritz Herald placement) must be purchased at the time of, or prior to, article submission. Add-ons cannot be applied retroactively to completed orders.</p>
+
+    <h3>8. Limitation of Liability</h3>
+    <p>Article Bridge is not responsible for SEO results, changes in search engine algorithms, editorial decisions made by third-party publications, or removal of content by third-party platforms after publication. Our total liability to any client shall not exceed the amount paid for the relevant order.</p>
+
+    <h3>9. Prohibited Content</h3>
+    <p>You may not use our services to publish content that is false, defamatory, illegal, harassing, or violates the rights of any third party. Article Bridge reserves the right to refuse or cancel any order that violates these standards, with a full refund issued if work has not yet begun.</p>
+
+    <h3>10. Governing Law</h3>
+    <p>These Terms shall be governed by and construed in accordance with applicable laws. Any disputes arising from these Terms shall be resolved through good-faith negotiation before pursuing formal legal action.</p>
+
+    <h3>11. Changes to Terms</h3>
+    <p>Article Bridge reserves the right to update these Terms at any time. Continued use of our services following any changes constitutes your acceptance of the revised Terms.</p>
+
+    <h3>Contact</h3>
+    <p>For any questions about these Terms, please reach out through our website. We're here to help.</p>
+
+    <div style="margin-top:3rem">
+      <a href="#" onclick="showMain(); return false;" class="btn-cta" style="display:inline-block;padding:0.75rem 1.75rem">← Back to Website</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showMain() {
+    document.getElementById('mainContent').classList.remove('hidden');
+    document.getElementById('termsPage').classList.remove('active');
+  }
+  function showTerms() {
+    document.getElementById('mainContent').classList.add('hidden');
+    document.getElementById('termsPage').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function showOnetime() {
+    document.getElementById('onetimePlans').classList.remove('hidden');
+    document.getElementById('monthlyPlans').classList.remove('active');
+    document.getElementById('onetimeBtn').classList.add('active');
+    document.getElementById('monthlyBtn').classList.remove('active');
+  }
+  function showMonthly() {
+    document.getElementById('onetimePlans').classList.add('hidden');
+    document.getElementById('monthlyPlans').classList.add('active');
+    document.getElementById('monthlyBtn').classList.add('active');
+    document.getElementById('onetimeBtn').classList.remove('active');
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        showMain();
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    });
+  });
+</script>
+</body>
+</html>
