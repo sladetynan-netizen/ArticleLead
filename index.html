@@ -210,6 +210,10 @@ h2 em{font-style:italic;color:var(--gold);}
 
 .plan-contact-link{display:block;text-align:center;margin-top:0.6rem;font-size:0.78rem;color:var(--teal);text-decoration:none;opacity:0.8;transition:opacity 0.2s;}
 .plan-contact-link:hover{opacity:1;text-decoration:underline;}
+.plan-price-original{font-size:1rem;color:var(--muted);text-decoration:line-through;margin-bottom:0.15rem;font-family:'Playfair Display',serif;}
+.plan-price-discount-badge{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(45,212,191,0.12);border:1px solid rgba(45,212,191,0.3);color:var(--teal);font-size:0.68rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:4px;margin-bottom:0.4rem;}
+.plan-price-discount-badge::before{content:'🏷';font-size:0.72rem;}
+
 .plan-for strong{color:var(--gold2);display:block;margin-bottom:0.25rem;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;}
 
 /* ARTICLES SECTION */
@@ -410,7 +414,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem;}
   <div class="drawer-section-label">Quick Purchase</div>
   <div class="drawer-plans-wrap">
     <div class="drawer-plan-row">
-      <div><div class="drawer-plan-name">Personal</div><div class="drawer-plan-price">$149.99 · $119.99/mo</div></div>
+      <div><div class="drawer-plan-name">Personal</div><div class="drawer-plan-price">$119.99 <span style="text-decoration:line-through;opacity:0.5;font-size:0.68rem;">$149.99</span> · $119.99/mo</div></div>
       <a href="https://buy.stripe.com/6oU28l3Jq7Ah0rkgcxdQQ08" target="_blank" class="drawer-plan-link">Buy →</a>
     </div>
     <div class="drawer-plan-row">
@@ -617,12 +621,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem;}
       <div class="price-card">
         <div class="plan-name">Personal</div>
         <div class="plan-tagline">For entrepreneurs, influencers &amp; coaches wanting their first powerful news placement.</div>
-        <div class="plan-price">$149.99</div>
+        <div class="plan-price-discount-badge">Limited Time Offer</div>
+        <div class="plan-price-original">$149.99</div>
+        <div class="plan-price">$119.99</div>
         <div class="plan-divider"></div>
         <div class="plan-for"><strong>Best For:</strong> Solo content creators, personal brands, and entrepreneurs just starting their press journey who want a single high-authority news placement to establish credibility fast.</div>
         <ul class="plan-features"><li>1 article on a major national news website</li><li>"As Seen On" badge included</li><li>High-authority news placement</li><li>Professional article written for you</li><li>Live article URL delivered</li></ul>
         <div class="plan-addon">+ $100 optional: The Ritz Herald placement</div>
-        <a href="https://buy.stripe.com/6oU28l3Jq7Ah0rkgcxdQQ08" target="_blank" class="plan-btn">Get Published →</a>
+        <a href="https://buy.stripe.com/3cI5kxbbSaMtde63pLdQQ0g" target="_blank" class="plan-btn">Get Published →</a>
         <a href="#contact" onclick="navTo('contact')" class="plan-contact-link">Have questions? Contact Us →</a>
       </div>
       <div class="price-card">
@@ -1005,7 +1011,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem;}
     </div>
     <div class="footer-links">
       <h4>Plans</h4>
-      <a href="https://buy.stripe.com/6oU28l3Jq7Ah0rkgcxdQQ08" target="_blank">Personal — $149.99</a>
+      <a href="https://buy.stripe.com/3cI5kxbbSaMtde63pLdQQ0g" target="_blank">Personal — $119.99 (was $149.99)</a>
       <a href="https://buy.stripe.com/14AfZb1BibQx7TM8K5dQQ0a" target="_blank">Basic — $249.99</a>
       <a href="https://buy.stripe.com/00wcMZ4NucUB4HA4tPdQQ0c" target="_blank">Standard — $399.99</a>
       <a href="https://buy.stripe.com/8x24gtdk09Ip7TMbWhdQQ0e" target="_blank">Platinum — $599.99</a>
